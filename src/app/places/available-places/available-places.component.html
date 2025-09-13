@@ -1,0 +1,10 @@
+<app-places-container title="Available Places">
+  @if(isFeatching()){
+    <p class="fallback-text">Featching Available Places.....</p>
+  }
+  @if (places()) {
+  <app-places [places]="places()!" />
+  } @else if (places()?.length === 0) {
+  <p class="fallback-text">Unfortunately, no places could be found.</p>
+  }
+</app-places-container>
