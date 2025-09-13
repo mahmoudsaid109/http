@@ -1,5 +1,5 @@
 <app-places-container title="Your Favorite Places">
-  @if(isFeatching()&&!error()){
+  @if(isFetching()&&!error()){
   <p class="fallback-text">Featching Available Places.....</p>
   } @if(error()){
   <p class="fallback-text">{{ error() }}</p>
