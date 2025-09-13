@@ -1,6 +1,9 @@
 <app-places-container title="Available Places">
-  @if(isFeatching()){
+  @if(isFeatching()&&!error()){
     <p class="fallback-text">Featching Available Places.....</p>
+  }
+  @if(error()){
+    <p class="fallback-text">{{error()}}</p>
   }
   @if (places()) {
   <app-places [places]="places()!" />
