@@ -48,7 +48,8 @@ export class PlacesService {
         catchError((error) => {
           this.userPlaces.set(prevPlaces);
           this.errorServices.showError(
-            'Something went wrong adding place to user places');
+            'Something went wrong adding place to user places'
+          );
           return throwError(
             () => new Error('Something went wrong adding place to user places')
           );
@@ -56,7 +57,24 @@ export class PlacesService {
       );
   }
 
-  removeUserPlace(place: Place) {}
+  removeUserPlace(place: Place) {
+    const prevPlaces = this.userPlaces();
+    this.userPlaces.set(prevPlaces.filter((p) => p.id !== place.id));
+    return this.httpClient
+      .delete(`http://localhost:3000/user-places/${place.id}`)
+      .pipe(
+        catchError((error) => {
+          this.userPlaces.set(prevPlaces);
+          this.errorServices.showError(
+            'Something went wrong removing place from user places'
+          );
+          return throwError(
+            () =>
+              new Error('Something went wrong removing place from user places')
+          );
+        })
+      );
+  }
   private fetchPlaces(url: string, errorMessage: string) {
     return this.httpClient.get<{ places: Place[] }>(url).pipe(
       map((resData) => resData.places),
